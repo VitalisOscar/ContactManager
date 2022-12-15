@@ -1,18 +1,29 @@
 <?php
 
+use App\Http\Controllers\Auth\SignupController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// User Authentication
+Route::prefix('account')
+->name('account')
+->group(function () {
 
-Route::get('/', function () {
-    return view('welcome');
+    // User Registration
+    Route::get('register', [SignupController::class, 'showForm'])->name('.register');
+    Route::post('register', [SignupController::class, 'signup']);
+
+});
+// End User Authentication
+
+// User area
+Route::prefix('app')
+->name('app')
+->middleware(['auth'])
+->group(function () {
+
+    // Dashboard
+    Route::get('/', function () {
+        return response('Logged in');
+    })->name('.dashboard');
+
 });
