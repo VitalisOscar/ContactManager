@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SignupController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,8 +13,13 @@ Route::prefix('account')
     Route::get('register', [SignupController::class, 'showForm'])->name('.register');
     Route::post('register', [SignupController::class, 'signup']);
 
+    // Login
+    Route::get('login', [LoginController::class, 'showForm'])->name('.login');
+    Route::post('login', [LoginController::class, 'login']);
+
 });
 // End User Authentication
+
 
 // User area
 Route::prefix('app')
