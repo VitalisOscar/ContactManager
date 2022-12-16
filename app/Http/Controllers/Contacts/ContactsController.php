@@ -36,7 +36,8 @@ class ContactsController extends Controller
      */
     function getSingle($contact){
         return response()->view('contacts.single', [
-            'contact' => $contact
+            'contact' => $contact,
+            'labels' => PhoneNumber::LABELS
         ]);
     }
 
@@ -76,6 +77,8 @@ class ContactsController extends Controller
                 ]);
 
         }catch(\Exception $e){
+            DB::rollBack();
+
             return back()
                 ->withInput()
                 ->withErrors([
@@ -88,13 +91,51 @@ class ContactsController extends Controller
      * Handle request to edit an existing contact
      */
     function edit(ContactDataRequest $request, $contact){
+        try{
 
+            // We expect to run several db operations
+            DB::beginTransaction();
+
+            // Update the contact
+            $result = $this->editContact(
+                $contact,
+                $request->validated()
+            );
+
+            if(is_string($result)){
+                // An error occurred, stop and return the
+                DB::rollBack();
+
+                return back()
+                    ->withInput()
+                    ->withErrors([
+                        'status' => $result
+                    ]);
+            }
+
+            // Done
+            DB::commit();
+
+            return back()
+                ->with([
+                    'status' => 'Contact updated successfully'
+                ]);
+
+        }catch(\Exception $e){
+            DB::rollBack();
+
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'status' => Lang::get('app.server_error')
+                ]);
+        }
     }
 
     /**
      * Handle request to delete an existing contact
      */
-    function delete(Request $request, $contact){
+    function delete($contact){
         try{
             // We expect multiple delete sql statements to be executed
             DB::beginTransaction();

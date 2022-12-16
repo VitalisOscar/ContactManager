@@ -47,6 +47,19 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+
+        // Bind route parameter to respective models
+        $this->bindRouteParams();
+    }
+
+    protected function bindRouteParams(){
+        Route::bind('contact', function($id){
+            // Bind to the current user's contact with matching id
+            return auth()->user()
+                ->contacts()
+                ->whereId($id)
+                ->firstOrFail();
+        });
     }
 
     /**

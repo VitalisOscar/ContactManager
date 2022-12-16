@@ -40,14 +40,12 @@ Route::prefix('app')
 
         Route::get('/', [ContactsController::class, 'getAll'])->name('.all');
 
-        Route::get('create', [])->name('.create');
-        Route::post('create', [ContactsController::class, 'create']);
+        Route::post('create', [ContactsController::class, 'create'])->name('.create');
 
         // Single contact
-        Route::get('{contact}', [])->name('.single');
-
-        Route::patch('{contact}', [])->name('.update');
-        Route::delete('{contact}', [])->name('.delete');
+        Route::get('{contact}', [ContactsController::class, 'getSingle'])->name('.single');
+        Route::patch('{contact}', [ContactsController::class, 'edit'])->name('.update');
+        Route::delete('{contact}', [ContactsController::class, 'delete'])->name('.delete');
 
     });
     // End Contact management

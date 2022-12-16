@@ -1,10 +1,16 @@
 @foreach ($contacts as $contact)
     <div>
-        <a>
+        <a href="{{ route('app.contacts.single', $contact) }}">
             <img src="{{ $contact->photo }}" alt="{{ $contact->full_name }}" width="50">
             {{ $contact->full_name }}<br>
             {{ $contact->phone }}<br>
         </a>
+
+        <form action="{{ route('app.contacts.delete', $contact) }}" method="post" enctype="multipart/form-data">
+            @method('DELETE')
+            @csrf
+            <input type="submit" value="Delete Contact">
+        </form>
     </div>
 @endforeach
 

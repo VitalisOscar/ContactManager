@@ -61,42 +61,53 @@ trait ContactManager{
      */
     function editContact($contact, $data){
         try{
-
-            if($data['full_name']){
+            // Update contact data if it has been passed
+            if(isset($data['full_name'])){
                 $contact->full_name = $data['full_name'];
             }
 
-            if($data['email']){
+            if(isset($data['email'])){
                 $contact->email = $data['email'];
             }
 
-            if($data['photo']){
+            if(isset($data['photo'])){
                 $contact->photo = $data['photo']->store(Contact::PHOTO_UPLOAD_DIR, 'public');
             }
 
             // Save only if changes have been made
             if($contact->isDirty()){
-                $contact->save();
-            }
-
-            // Manage phone numbers
-            foreach($contact->phone_numbers as $phone_number){
-                // Check if the phone number has an update
-                $update = array_filter($data['phone_numbers'], function($phone) use ($phone_number){
-                    return $phone['id'] == $phone_number->id;
-                });
-
-                if($update){
-                    // Update the phone number
-                    $phone_number->number = $update['number'];
-                    $phone_number->label = $update['label'];
-
-                    // Save only if changes have been made
-                    if($phone_number->isDirty()){
-                        $phone_number->save();
-                    }
+                if(!$contact->save()){
+                    return Lang::get('app.server_error');
                 }
             }
+
+
+            // Update phone numbers
+            foreach($contact->phone_numbers as $phone_number){
+
+                // Go through submitted phone number data to get data
+                // for the particular phone number
+                foreach($data['phone_numbers'] as $phone_data){
+                    if(isset($phone_data['id']) && $phone_data['id'] == $phone_number->id){
+                        
+                        // Update the phone if changes have been made
+                        $result = $this->editPhone(
+                            $phone_number,
+                            $phone_data['number'],
+                            $phone_data['label'] ?? null
+                        );
+
+                        if(is_string($result)){
+                            // An error occurred, return the error
+                            return $result;
+                        }
+
+                        // Phone number has been updated, break out of the loop
+                        break;
+                    }
+                }
+
+            } // Done updating phone numbers
 
             // Return the updated contact
             return $contact;
@@ -127,7 +138,7 @@ trait ContactManager{
             return $phone_number;
 
         }catch(Exception $e){
-            return Lang::get('app.server_error').$e->getMessage();
+            return Lang::get('app.server_error');
         }
     }
 
@@ -143,17 +154,20 @@ trait ContactManager{
     function editPhone($phone, $number, $label){
         try{
 
-            // Create a new phone number
-            if(
-                $phone->update([
-                    'number' => $number,
-                    'label' => $label ?? 'Other',
-                ])
-            ){
-                return true;
+            // Add Changes
+            $phone->number = $number;
+            $phone->label = $label ?? 'Other';
+            
+            // Update only if dirty
+            if($phone->isDirty()){
+                if($phone->save()){
+                    return true;
+                }else{
+                    return Lang::get('app.unknown_error');
+                }
             }
 
-            return Lang::get('app.unknown_error');
+            return true;
 
         }catch(Exception $e){
             return Lang::get('app.server_error');
