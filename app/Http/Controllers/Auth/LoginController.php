@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class LoginController extends Controller
 {
     /**
-     * Show a user registration form
+     * Show a user login form
      */
     function showForm(){
         return response()->view('auth.login');
@@ -16,7 +17,7 @@ class LoginController extends Controller
 
 
     /**
-     * Process a submitted user registration request
+     * Process a submitted user login request
      */
     function login(Request $request){
         try{
@@ -30,7 +31,7 @@ class LoginController extends Controller
             if($validator->fails()){
                 return back()
                     ->withInput()
-                    ->withErrors($validator);
+                    ->withErrors($validator->errors());
             }
 
             // Attempt to login the user
@@ -38,7 +39,7 @@ class LoginController extends Controller
                 return back()
                     ->withInput()
                     ->withErrors([
-                        'status' => 'Invalid credentials'
+                        'status' => Lang::get('app.invalid_credentials')
                     ]);
             }
 
@@ -49,7 +50,7 @@ class LoginController extends Controller
             return back()
                 ->withInput()
                 ->withErrors([
-                    'status' => 'Something went wrong on our end. You can try again or leave us a message if that persists'
+                    'status' => Lang::get('app.server_error')
                 ]);
         }
     }

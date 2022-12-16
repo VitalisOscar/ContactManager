@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\SignupRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Lang;
 
 class SignupController extends Controller
 {
@@ -41,7 +42,7 @@ class SignupController extends Controller
             return back()
                 ->withInput()
                 ->withErrors([
-                    'status' => 'Something went wrong on our end. You can try again or leave us a message if that persists'
+                    'status' => Lang::get('app.server_error')
                 ]);
         }
     }

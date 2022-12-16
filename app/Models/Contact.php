@@ -12,18 +12,22 @@ class Contact extends Model
     // We'll use this image for contacts with no provided contact photos
     const DEFAULT_CONTACT_PHOTO = 'contacts/default.png';
 
+    // The directory where contact photos are stored
+    const PHOTO_UPLOAD_DIR = 'contacts';
+
     protected $fillable = [
         'full_name',
         'email',
-        'photo',
-        'phone_numbers',
+        'photo'
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
-        'phone_numbers' => 'array', // Will be stored as a json list
     ];
 
+    protected $with = ['phone_numbers'];
+
+    protected $append = ['phone_numbers'];
 
 
     // RELATIONS
@@ -31,6 +35,15 @@ class Contact extends Model
         return $this->belongsTo(User::class);
     }
 
+    function phone_numbers(){
+        return $this->hasMany(PhoneNumber::class);
+    }
+
+
+    // SCOPES
+    function scopeAToZ($q){
+        return $q->orderBy('full_name', 'asc');
+    }
 
 
     // ACCESSORS
@@ -41,5 +54,13 @@ class Contact extends Model
      */
     function getPhotoAttribute($path){
         return asset('storage/'.($path ?? self::DEFAULT_CONTACT_PHOTO));
+    }
+
+    /**
+     * We'll use the first phone number of the contact as the default phone number
+     * @return string
+     */
+    function getPhoneAttribute(){
+        return $this->phone_numbers()->first()->number;
     }
 }
