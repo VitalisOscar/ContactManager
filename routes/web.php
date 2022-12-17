@@ -5,6 +5,11 @@ use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\Contacts\ContactsController;
 use Illuminate\Support\Facades\Route;
 
+// Start route should redirect to contact list
+Route::get('', function(){
+    return redirect()->route('app.contacts.all');
+});
+
 // User Authentication
 Route::prefix('account')
 ->name('account')

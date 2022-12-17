@@ -61,7 +61,7 @@
                 <div class="text-cente col-md-10 col-lg-7">
                     <h4>No Contact</h4>
 
-                    <p class="lead">
+                    <p>
                         Looks like you have deleted all your contacts or have not added any.
                         Every contact you add will be shown here
                     </p>
