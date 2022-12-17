@@ -44,7 +44,7 @@
                         {{-- Contact Photo --}}
                         <div class="form-group mb-4 new-contact-photo">
                             <img onclick="document.querySelector('#photo').click()" src="{{ $contact->photo }}" alt="Pic" id="photo-preview" class="mx-auto mb-3">
-                            
+
                             <label>Contact Photo</label>
                             <input type="file" class="form-control-file" name="photo" id="photo" accept="image/*" />
                         </div>
@@ -75,8 +75,10 @@
                                     </span>
                                 </div>
 
-                                <input class="form-control" type="email" name="email" placeholder="Email" value="{{ old('email') ?? $contact->email }}" required />
+                                <input class="form-control" type="email" name="email" placeholder="Email" value="{{ old('email') ?? $contact->email }}" />
                             </div>
+
+                            <span class="small">Optional</span>
 
                             @error('email')
                             <div class="small text-danger">{{ $message }}</div>
@@ -87,18 +89,18 @@
                         <div id="phone_numbers">
 
                             {{-- In case there were phone numbers submitted before,
-                                e.g if the form has errors and redirected back 
+                                e.g if the form has errors and redirected back
                                 in which case they are in old('phone_numbers')
                                 --}}
                             {{-- We add all of them on the form --}}
                             {{-- Otherwise, we add those on the contact i.e $contact->phone_numbers --}}
-                            
+
                             {{-- User may edit them --}}
                             <?php $i = 0; ?>
-                            
+
                             @foreach (old('phone_numbers') ?? $contact->phone_numbers as $phone_number)
                             <div class="form-group mb-3">
-                            
+
                                 {{-- Because editing is involved, we add the id as a hidden input --}}
                                 <input class="form-control" type="hidden" name="phone_numbers[{{ $i }}][id]" value="{{$phone_number['id'] ?? $phone_number->id ?? '' }}" />
 
@@ -108,9 +110,9 @@
                                             <i class="fa fa-fw fa-phone"></i>
                                         </span>
                                     </div>
-                    
+
                                     <input class="form-control" type="tel" name="phone_numbers[{{ $i }}][number]" placeholder="Phone Number" value="{{$phone_number['number'] ?? $phone_number->number ?? '' }}" />
-                                    
+
                                     <select class="form-control" name="phone_numbers[{{ $i }}][label]">
                                         <option value="">Type</option>
                                         @foreach($labels as $label)
@@ -118,7 +120,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                    
+
                             </div>
                             <?php $i++; ?>
                             @endforeach
@@ -195,7 +197,7 @@ function addPhoneNumber(phone, type){
                 </div>
 
                 <input class="form-control" type="tel" name="phone_numbers[${index}][number]" placeholder="Phone Number" value="${phone}" />
-                
+
                 <select class="form-control" name="phone_numbers[${index}][label]">
                     <option value="">Type</option>
                     ${labelOptions}
