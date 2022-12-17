@@ -32,11 +32,10 @@ class ContactsController extends Controller
         $result = $request->user() // For the current user
             ->contacts()
             ->aToZ() // Order by name
-            ->paginate(50); // Limit per page
-
+            ->get();
+            
         return response()->view('contacts.all', [
-            'contacts' => $result,
-            'labels' => PhoneNumber::LABELS
+            'contacts' => $result
         ]);
     }
 
