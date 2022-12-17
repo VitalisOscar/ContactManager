@@ -6,7 +6,7 @@ $current_route = \Illuminate\Support\Facades\Route::current();
 
 ?>
 
-<div class="px-4">
+<div class="px-4 sidenav">
 
     <div class="d-flex align-items-start mb-4">
 
