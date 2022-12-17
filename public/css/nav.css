@@ -1,0 +1,25 @@
+header{
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+.navbar-brand{
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand .logo{
+    height: 40px !important;
+    margin-right: 1rem;
+}
+
+.navbar-brand span{
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.navbar-brand span:last-child{
+    color: #172b4d;
+    margin-left: .5rem;
+}

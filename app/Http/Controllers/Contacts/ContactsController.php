@@ -17,6 +17,15 @@ class ContactsController extends Controller
     use ContactManager;
 
     /**
+     * Show a new contact form
+     */
+    function showForm(){
+        return response()->view('contacts.add', [
+            'labels' => PhoneNumber::LABELS
+        ]);
+    }
+
+    /**
      * Show list of user's contacts
      */
     function getAll(Request $request){
@@ -48,13 +57,24 @@ class ContactsController extends Controller
     function create(ContactDataRequest $request){
         try{
 
+            $data = $request->validated();
+
+            // Just ensure we have at least 1 phone number
+            if(count($data['phone_numbers'] ?? []) < 1){
+                return back()
+                    ->withInput()
+                    ->withErrors([
+                        'status' => 'Add at least one phone number'
+                    ]);
+            }
+
             // We expect to run several db operations
             DB::beginTransaction();
 
             // Create the contact
             $contact = $this->newContact(
                 $request->user(),
-                $request->validated()
+                $data
             );
 
             if(is_string($contact)){
@@ -93,13 +113,24 @@ class ContactsController extends Controller
     function edit(ContactDataRequest $request, $contact){
         try{
 
+            $data = $request->validated();
+
+            // Just ensure we have at least 1 phone number
+            if(count($data['phone_numbers'] ?? []) < 1){
+                return back()
+                    ->withInput()
+                    ->withErrors([
+                        'status' => 'Add at least one phone number'
+                    ]);
+            }
+
             // We expect to run several db operations
             DB::beginTransaction();
 
             // Update the contact
             $result = $this->editContact(
                 $contact,
-                $request->validated()
+                $data
             );
 
             if(is_string($result)){

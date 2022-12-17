@@ -57,6 +57,15 @@ class Contact extends Model
     }
 
     /**
+     * Get the total number of phone numbers the contact has
+     */
+    function getPhoneNumbersCountAttribute(){
+        // Since the models phone numbers are eager loaded automatically
+        // we just return the count
+        return count($this->phone_numbers);
+    }
+
+    /**
      * We'll use the first phone number of the contact as the default phone number
      * @return string
      */

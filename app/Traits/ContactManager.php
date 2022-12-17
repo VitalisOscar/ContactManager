@@ -52,7 +52,7 @@ trait ContactManager{
     }
 
     /**
-     * Handles all the process for creating a new contact
+     * Handles all the process for updating an existing contact
      *
      * @param Contact $contact
      * @param array $data
@@ -77,7 +77,7 @@ trait ContactManager{
             // Save only if changes have been made
             if($contact->isDirty()){
                 if(!$contact->save()){
-                    return Lang::get('app.server_error');
+                    return Lang::get('app.unknown_error');
                 }
             }
 
@@ -87,8 +87,14 @@ trait ContactManager{
 
                 // Go through submitted phone number data to get data
                 // for the particular phone number
-                foreach($data['phone_numbers'] as $phone_data){
-                    if(isset($phone_data['id']) && $phone_data['id'] == $phone_number->id){
+                foreach($data['phone_numbers'] as $key => $phone_data){
+                    if(
+                        isset($phone_data['id']) &&
+                        (
+                            $phone_data['id'] == $phone_number->id ||
+                            $phone_data['number'] == $phone_number->number
+                        ) // Same number or id
+                    ){
                         
                         // Update the phone if changes have been made
                         $result = $this->editPhone(
@@ -102,12 +108,35 @@ trait ContactManager{
                             return $result;
                         }
 
+                        // Remove the data - we have already dealt with it
+                        unset($data['phone_numbers'][$key]);
+
                         // Phone number has been updated, break out of the loop
                         break;
                     }
                 }
 
+                
             } // Done updating phone numbers
+
+            // Go through submitted data again, to make add any newly added phone numbers
+            foreach($data['phone_numbers'] as $phone_data){
+                // Add the phone number
+                $result = $this->addPhoneToContact(
+                    $contact,
+                    $phone_data['number'],
+                    $phone_data['label'] ?? null
+                );
+
+                if(is_string($result)){
+                    // An error occurred, return the error
+                    return $result;
+                }
+
+                // Phone number has been updated, break out of the loop
+                break;
+            } // Done adding any new phone numbers
+
 
             // Return the updated contact
             return $contact;

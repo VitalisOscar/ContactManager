@@ -15,7 +15,7 @@
 
     {{-- If there is a status info or error message, display an alert for it --}}
     <div class="alert-area px-0 col-lg-4 col-xl-5 col-md-6 mx-auto">
-        @if (session()->has('status'))\
+        @if (session()->has('status'))
         <div class="alert alert-info mt-3">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             {{ session()->get('status') }}
