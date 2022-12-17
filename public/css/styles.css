@@ -1,0 +1,147 @@
+body{
+    background-color: #fff !important;
+    min-height: 100vh;
+}
+
+.logo{
+    height: 50px;
+}
+
+.small{
+    font-size: .9em;
+}
+
+
+/* Custom alerts */
+.alert-area{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+.alert-area.visible{
+    top: 0;
+}
+
+
+/* Restyle form controls appearance */
+.form-control{
+    font-size: 1rem;
+    line-height: 1.5;
+    display: block;
+    width: 100%;
+    transition: .2s all !important;
+    border-radius: .25rem;
+    background-color: transparent;
+    box-shadow: none;
+    outline: none !important;
+    height: calc(2.75rem + 2px);
+    padding: .625rem .75rem;
+    color: #333 !important;
+}
+
+.form-control::placeholder, .form-control:focus::placeholder{
+    color: #495057;
+}
+
+
+/* Style input groups and their elements */
+.input-group{
+    transition: .2s all !important;
+}
+
+.input-group>*{
+    border: 2px solid #efefef !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.input-group>*:last-child{
+    border-radius: 0 .3rem .3rem 0;
+}
+
+
+/* WHen there is an element before an input in a group */
+.input-group .input-group-prepend ~ .form-control{
+    border-left: none !important;
+}
+
+.input-group .input-group-prepend{
+    border-right: none !important;
+    border-radius: .3rem 0 0 .3rem;
+    transition: .2s all !important;
+    background-color: transparent;
+}
+
+
+/* WHen there is an element after an input in a group */
+.input-group .input-group-append{
+    border-left: none !important;
+    transition: .2s all !important;
+    background-color: transparent;
+}
+
+
+/* Focused states */
+.input-group:focus-within .form-control{
+    border-color: #4285f4 !important;
+    transition: .2s all !important;
+}
+
+.input-group:focus-within .input-group-prepend{
+    border-color: #4285f4 !important;
+    transition: .2s all !important;
+}
+
+.input-group:focus-within .input-group-append{
+    border-color: #4285f4 !important;
+    transition: .2s all !important;
+}
+
+
+/* Text in an input group */
+.input-group .input-group-text i{
+    color: #8988aa;
+    transition: .2s all;
+}
+
+.input-group:focus-within .input-group-text i{
+    color: #495057;
+    transition: .2s all;
+}
+
+.input-group .input-group-text{
+    border: none;
+    background-color: transparent;
+}
+
+
+/* Labels */
+.form-group label{
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+/* Main button */
+.btn-main{
+    color: #fff;
+    border-color: #172b4d;
+    background-color: #172b4d;
+}
+
+.btn-main:hover{
+    color: #fff;
+    border-color: #172b4d; 
+    background-color: #112547;
+}
+
+
+/* Password toggle on auth pages */
+.pass-toggle{
+    cursor: pointer;
+    background: #efefef !important;
+    color: #333 !important;
+    transition: .3s all;
+}
