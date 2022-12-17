@@ -136,6 +136,14 @@
                             Add Phone Number
                         </button>
 
+                        {{-- Stay on page after edit --}}
+                        <div class="form-group mb-4">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="stay_on_page" name="stay_on_page" />
+                                <label class="custom-control-label" style="font-weight: 400" for="stay_on_page">Stay on page after updating contact</label>
+                            </div>
+                        </div>
+
                         {{-- End inputs --}}
 
                         <div class="mb-3">

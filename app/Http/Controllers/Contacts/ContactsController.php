@@ -90,7 +90,17 @@ class ContactsController extends Controller
             // Done
             DB::commit();
 
-            return back()
+            // If user chose to stay on page
+            if($request->boolean('stay_on_page')){
+                return back()
+                    ->with([
+                        'status' => Lang::get('app.contact_created')
+                    ]);
+            }
+
+            // Otherwise, redirect to the contact list
+            return redirect()
+                ->route('app.contacts.all')
                 ->with([
                     'status' => Lang::get('app.contact_created')
                 ]);
@@ -146,7 +156,18 @@ class ContactsController extends Controller
             // Done
             DB::commit();
 
-            return back()
+
+            // If user chose to stay on page
+            if($request->boolean('stay_on_page')){
+                return back()
+                    ->with([
+                        'status' => Lang::get('app.contact_updated')
+                    ]);
+            }
+
+            // Otherwise, redirect to the contact list
+            return redirect()
+                ->route('app.contacts.all')
                 ->with([
                     'status' => Lang::get('app.contact_updated')
                 ]);
