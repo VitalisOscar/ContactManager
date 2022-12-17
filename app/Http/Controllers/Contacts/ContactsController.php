@@ -33,7 +33,7 @@ class ContactsController extends Controller
             ->contacts()
             ->aToZ() // Order by name
             ->get();
-            
+
         return response()->view('contacts.all', [
             'contacts' => $result
         ]);
@@ -63,7 +63,7 @@ class ContactsController extends Controller
                 return back()
                     ->withInput()
                     ->withErrors([
-                        'status' => 'Add at least one phone number'
+                        'status' => Lang::get('app.add_at_least_one_number')
                     ]);
             }
 
@@ -92,7 +92,7 @@ class ContactsController extends Controller
 
             return back()
                 ->with([
-                    'status' => 'Contact created successfully'
+                    'status' => Lang::get('app.contact_created')
                 ]);
 
         }catch(\Exception $e){
@@ -119,7 +119,7 @@ class ContactsController extends Controller
                 return back()
                     ->withInput()
                     ->withErrors([
-                        'status' => 'Add at least one phone number'
+                        'status' => Lang::get('app.add_at_least_one_number')
                     ]);
             }
 
@@ -148,7 +148,7 @@ class ContactsController extends Controller
 
             return back()
                 ->with([
-                    'status' => 'Contact updated successfully'
+                    'status' => Lang::get('app.contact_updated')
                 ]);
 
         }catch(\Exception $e){
@@ -178,7 +178,7 @@ class ContactsController extends Controller
 
             return back()
                 ->with([
-                    'status' => 'Contact deleted successfully'
+                    'status' => Lang::get('app.contact_deleted')
                 ]);
 
         }catch(Exception $e){
@@ -187,7 +187,7 @@ class ContactsController extends Controller
             return back()
                 ->withInput()
                 ->withErrors([
-                    'status' => 'Something went wrong on our end. You can try again or leave us a message if that persists'
+                    'status' => Lang::get('app.server_error')
                 ]);
         }
     }
