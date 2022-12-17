@@ -26,7 +26,7 @@ class ContactDataRequest extends FormRequest
     {
         return [
             'full_name' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'nullable|email',
             'photo' => 'nullable|image|max:512',
             'phone_numbers' => 'required|array',
             'phone_numbers.*' => 'array',

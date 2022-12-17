@@ -35,7 +35,7 @@
                     <div class="mb-4 text-center">
                         <h4 class="mb-0">Create Contact</h4>
                     </div>
-                    
+
                     <div class="mb-4 border rounded p-3">
 
                         {{-- Inputs --}}
@@ -43,7 +43,7 @@
                         {{-- Contact Photo --}}
                         <div class="form-group mb-4 new-contact-photo">
                             <img onclick="document.querySelector('#photo').click()" src="{{ asset('img/default-photo.png') }}" alt="Pic" id="photo-preview" class="mx-auto mb-3">
-                            
+
                             <label>Contact Photo</label>
                             <input type="file" class="form-control-file" name="photo" id="photo" accept="image/*" />
                         </div>
@@ -74,8 +74,10 @@
                                     </span>
                                 </div>
 
-                                <input class="form-control" type="email" name="email" placeholder="Email" value="{{ old('email') }}" required />
+                                <input class="form-control" type="email" name="email" placeholder="Add Email" value="{{ old('email') }}" />
                             </div>
+
+                            <span class="small">Optional</span>
 
                             @error('email')
                             <div class="small text-danger">{{ $message }}</div>
@@ -88,7 +90,7 @@
                             {{-- In case there were phone numbers submitted before, e.g if the form has errors and redirected back --}}
                             {{-- We add all of them on the form --}}
                             <?php $i = 0; ?>
-                            
+
                             @foreach (old('phone_numbers') ?? [] as $phone_number)
                             <div class="form-group mb-3">
                                 <div class="input-group">
@@ -97,9 +99,9 @@
                                             <i class="fa fa-fw fa-phone"></i>
                                         </span>
                                     </div>
-                    
+
                                     <input class="form-control" type="tel" name="phone_numbers[{{ $i }}][number]" placeholder="Phone Number" value="{{ $phone_number['number'] ?? '' }}" />
-                                    
+
                                     <select class="form-control" name="phone_numbers[{{ $i }}][label]">
                                         <option value="">Type</option>
                                         @foreach($labels as $label)
@@ -107,7 +109,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                    
+
                             </div>
                             <?php $i++; ?>
                             @endforeach
@@ -181,7 +183,7 @@ function addPhoneNumber(phone, type){
                 </div>
 
                 <input class="form-control" type="tel" name="phone_numbers[${index}][number]" placeholder="Phone Number" value="${phone}" />
-                
+
                 <select class="form-control" name="phone_numbers[${index}][label]">
                     <option value="">Type</option>
                     ${labelOptions}
