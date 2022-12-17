@@ -24,19 +24,19 @@
             </div>
 
             {{-- Contact list --}}
-            <div class="col-lg-9 px-md-5">
+            <div class="col-lg-9 px-lg-4 px-xl-5">
 
                 {{-- Labels --}}
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-6 col-sm-3">
                         <h6>Name</h6>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-4 d-none d-sm-block">
                         <h6>Email</h6>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-3 col-sm-2">
                         <h6>Phone</h5>
                     </div>
                 </div>

@@ -156,6 +156,7 @@ body{
     color: inherit;
     transition: .2s all !important;
     border-radius: .3rem;
+    cursor: pointer;
 }
 
 .contact:hover{

@@ -6,7 +6,7 @@ $current_route = \Illuminate\Support\Facades\Route::current();
 
 ?>
 
-<div class="px-4 sidenav">
+<div class="px-4 sidenav d-none d-lg-block">
 
     <div class="d-flex align-items-start mb-4">
 
@@ -34,7 +34,7 @@ $current_route = \Illuminate\Support\Facades\Route::current();
         </a>
 
         <a class="list-group-item @if($current_route->getName() == 'app.contacts.create') active @endif " href="{{ route('app.contacts.create') }}">
-            <i class="fa fa-fw fa-users mr-3"></i>
+            <i class="fa fa-fw fa-user-plus mr-3"></i>
             <span>Create Contact</span>
         </a>
 

@@ -1,16 +1,19 @@
 <div href="{{ route('app.contacts.single', $contact) }}" class="row contact">
-    <div class="col-md-3 contact-item">
-        <div class="d-flex align-items-center">
+    {{-- Link - we will trigger clicks programmatically when sections of the contact are clicked --}}
+    <a href="{{ route('app.contacts.single', $contact) }}" id="contact-link-{{ $contact->id }}" class="d-none"></a>
+    
+    <div class="col-6 col-sm-3 contact-item">
+        <div class="d-flex align-items-center" onclick="document.querySelector('#contact-link-{{ $contact->id }}').click()">
             <img src="{{ $contact->photo }}" alt="Photo" class="contact-photo" />
             <div class="ml-4">{{ $contact->full_name }}</div>
         </div>
     </div>
 
-    <div class="col-md-4 contact-item">
-        <div>{{ $contact->email }}</div>
+    <div class="col-4 contact-item d-none d-sm-block">
+        <span onclick="document.querySelector('#contact-link-{{ $contact->id }}').click()">{{ $contact->email }}</span>
     </div>
 
-    <div class="col-md-3 contact-item">
+    <div class="col-3 contact-item" onclick="document.querySelector('#contact-link-{{ $contact->id }}').click()">
         <div>{{ $contact->phone }}</div>
 
         {{-- If contact has more phone numbers --}}
@@ -19,7 +22,7 @@
         @endif
     </div>
 
-    <div class="col-md-2 contact-item contact-actions">
+    <div class="col-3 col-sm-2 contact-item contact-actions">
         <div class="d-flex align-items-center">
             <a class="edit action" href="{{ route('app.contacts.single', $contact) }}">
                 <i class="fa fa-pen"></i>
