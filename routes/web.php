@@ -18,6 +18,8 @@ Route::prefix('account')
     Route::get('login', [LoginController::class, 'showForm'])->name('.login');
     Route::post('login', [LoginController::class, 'login']);
 
+    Route::get('logout', [LoginController::class, 'logout'])->name('.logout');
+
 });
 // End User Authentication
 
@@ -40,7 +42,8 @@ Route::prefix('app')
 
         Route::get('/', [ContactsController::class, 'getAll'])->name('.all');
 
-        Route::post('create', [ContactsController::class, 'create'])->name('.create');
+        Route::get('create', [ContactsController::class, 'showForm'])->name('.create');
+        Route::post('create', [ContactsController::class, 'create']);
 
         // Single contact
         Route::get('{contact}', [ContactsController::class, 'getSingle'])->name('.single');

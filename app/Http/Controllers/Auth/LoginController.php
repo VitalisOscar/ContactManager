@@ -15,6 +15,15 @@ class LoginController extends Controller
         return response()->view('auth.login');
     }
 
+    /**
+     * Logs out a user
+     */
+    function logout(Request $request){
+        auth()->logout();
+
+        return redirect()->route('account.login');
+    }
+
 
     /**
      * Process a submitted user login request
