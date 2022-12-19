@@ -72,4 +72,17 @@ class Contact extends Model
     function getPhoneAttribute(){
         return $this->phone_numbers()->first()->number;
     }
+
+
+
+    // HELPERS
+
+    /**
+     * Check if the contact has a given phone number
+     * @param string $number
+     * @return bool
+     */
+    function hasPhoneNumber($number){
+        return $this->phone_numbers()->where('number', $number)->exists();
+    }
 }

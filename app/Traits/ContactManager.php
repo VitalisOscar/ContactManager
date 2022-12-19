@@ -95,7 +95,7 @@ trait ContactManager{
                             $phone_data['number'] == $phone_number->number
                         ) // Same number or id
                     ){
-                        
+
                         // Update the phone if changes have been made
                         $result = $this->editPhone(
                             $phone_number,
@@ -116,11 +116,16 @@ trait ContactManager{
                     }
                 }
 
-                
+
             } // Done updating phone numbers
 
             // Go through submitted data again, to make add any newly added phone numbers
             foreach($data['phone_numbers'] as $phone_data){
+                // Check if phone number exists
+                if($contact->hasPhoneNumber($phone_data['number'])){
+                    continue;
+                }
+
                 // Add the phone number
                 $result = $this->addPhoneToContact(
                     $contact,
@@ -186,7 +191,7 @@ trait ContactManager{
             // Add Changes
             $phone->number = $number;
             $phone->label = $label ?? 'Other';
-            
+
             // Update only if dirty
             if($phone->isDirty()){
                 if($phone->save()){
